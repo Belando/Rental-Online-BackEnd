@@ -30,11 +30,11 @@ MoviesController.newMovie = async (req, res) => {
 
 MoviesController.updateMovie = async (req, res) => {
 
-    let id = req.body.id
+    let _id = req.body._id
     let newName = req.body.name
 
     try{
-        await Movie.findByIdAndUpdate(id, {
+        await Movie.findByIdAndUpdate(_id, {
             $set: {
                 name: newName
             }
@@ -48,12 +48,12 @@ MoviesController.updateMovie = async (req, res) => {
 }
 
 MoviesController.deleteMovie = async (req, res) => {
-    let id = req.body.id
+    let _id = req.body._id
     
     try{
-        await Movie.findByIdAndDelete(id)
+        await Movie.findByIdAndDelete(_id)
         .then (movie => {
-            res.send({"Message": `La película ${movie.name}se ha eliminado con éxito`})
+            res.send({"Message": `La película ${movie.name} se ha eliminado con éxito`})
         })
     } catch (error){
         console.log("Error deleting movie", error)
