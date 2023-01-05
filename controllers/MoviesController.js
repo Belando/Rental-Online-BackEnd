@@ -6,10 +6,13 @@ const MoviesController = {}
 MoviesController.getAllMovies = async (req, res) => {
 
     try{
-        await Movie.find({})
-        .then(movies => {
+        let movies = await Movie.find({})
+
+        if(movies.length > 0){
             res.send(movies)
-        })
+        }else{
+            res.send({"Msg":"Lo sentimos, no hemos encontrado ninguna película."})
+        }
     } catch (error){
         console.log (error)
     }
@@ -20,30 +23,38 @@ MoviesController.newMovie = async (req, res) => {
     let name = req.body.name;
     let year = req.body.year;
 
-    await Movie.create({
-        name: name,
-        year: year
-    }).then(movie => {
-        res.send({"Message": `La película ${movie.name} se ha añadido con éxito`})
-    }).catch(error => {console.log(error)})
+    try{
+        let result = await Movie.create({
+            name: name,
+            year: year
+        })
+        if(result?.name){
+            res.send({"Msg": `La película ${result.name} se ha añadido con éxito`})
+        }
+    }catch (error) {
+        console.log(error)
+    }
 }
 
 MoviesController.updateMovie = async (req, res) => {
 
     let _id = req.body._id
     let newName = req.body.name
+    let newYear = req.body.year
 
     try{
-        await Movie.findByIdAndUpdate(_id, {
+        let result = await Movie.findByIdAndUpdate(_id, {
             $set: {
-                name: newName
+                name: newName,
+                year: newYear
             }
         }).setOptions({ returnDocument: "after" })
-        .then(movieModified => {
-            res.send(movieModified)
-        })
+
+        if(result?.name){
+            res.send(result)
+        }
     } catch (error){
-        console.log("Error updating movie name", error)
+        console.log(error)
     }
 }
 
@@ -51,12 +62,10 @@ MoviesController.deleteMovie = async (req, res) => {
     let _id = req.body._id
     
     try{
-        await Movie.findByIdAndDelete(_id)
-        .then (movie => {
-            res.send({"Message": `La película ${movie.name} se ha eliminado con éxito`})
-        })
+        let result = await Movie.findByIdAndDelete(_id)
+        res.send({"Message": `La película ${movie.name} se ha eliminado con éxito`})
     } catch (error){
-        console.log("Error deleting movie", error)
+        console.log("Error borrando la película", error)
     }
 }
 

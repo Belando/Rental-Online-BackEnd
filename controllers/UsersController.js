@@ -7,44 +7,53 @@ const authConfig = require("../config/auth")
 
 const UsersController = {}
 
-UsersController.getAllUsers = async(req, res) => {
+UsersController.getAllUsers = async (req, res) => {
 
-    try{
-        await User.find({})
-        .then(users => {
-            res.send(users)
-        })
-    } catch (error){
-        console.log (error)
+    try {
+        let result = await User.find({})
+
+        if (result.length > 0) {
+            res.send(result)
+        } else {
+            res.send({ "Msg": "Lo sentimos, no hemos encontrado ningún usuario." })
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
 UsersController.getUserById = async (req, res) => {
 
     let _id = req.params._id
+    let user = req.user.usuario[0]
 
-    try{
-        await User.findById(_id)
-        .then(found => {
-            res.send(found)
+    if (_id !== user._id) {
+        res.send({ "Msg": "Acceso no autorizado" })
+    } else {
+        res.send({
+            "id": user._id,
+            "name": user.name,
+            "surname": user.surname,
+            "dni": user.dni,
+            "email": user.email,
+            "phone": user.phone,
+            "nationality": user.nationality
         })
-    } catch (error){
-        console.log (error)
     }
 }
 
 UsersController.getUsersByName = async (req, res) => {
 
-    let name= req.params.name
+    let name = req.body.name
 
     try {
         await User.find({
             name: name
         })
-        .then(foundUsers => {
-            res.send(foundUsers)
-        })
-    }catch (error){
+            .then(foundUsers => {
+                res.send(foundUsers)
+            })
+    } catch (error) {
         console.log(error)
     }
 }
@@ -53,18 +62,22 @@ UsersController.newUser = async (req, res) => {
 
     let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.Rounds))
 
-    await User.create({
-        name: req.body.name,
-        surname: req.body.surname,
-        dni: req.body.dni,
-        email: req.body.email,
-        password: password,
-        phone: req.body.phone,
-        nationality: req.body.nationality
-
-    }).then (user => {
-        res.send({"Message": `El usuario ${user.name} se ha añadido con éxito`})
-    }).catch (error => {console.log(error)})
+    try {
+        let user = await User.create({
+            name: req.body.name,
+            surname: req.body.surname,
+            dni: req.body.dni,
+            email: req.body.email,
+            password: password,
+            phone: req.body.phone,
+            nationality: req.body.nationality
+        })
+        if (user) {
+            res.send({ "Message": `El usuario ${user.name} se ha añadido con éxito` })
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 UsersController.updateUser = async (req, res) => {
@@ -73,17 +86,18 @@ UsersController.updateUser = async (req, res) => {
     let newName = req.body.name
     let newSurname = req.body.surname
 
-    try{
-        await User.findOneAndUpdate(
-            {dni:dni},
-            {name: newName,
-            surname: newSurname}
-        )
-        .setOptions({ returnDocument: "after"})
-        .then(userModified => {
-            res.send(userModified)
-        })
-    }catch (error){
+    try {
+        let updated = await User.findOneAndUpdate(
+            { dni: dni },
+            {
+                name: newName,
+                surname: newSurname
+            }
+        ).setOptions({ returnDocument: "after" })
+        if (updated) {
+            res.send("Usuario actualizado con éxito")
+        }
+    } catch (error) {
         console.log("Error updating user data", error)
     }
 }
@@ -91,47 +105,52 @@ UsersController.updateUser = async (req, res) => {
 UsersController.deleteUser = async (req, res) => {
 
     let dni = req.body.dni
+    let userAdmin = req.user.usuario[0]
 
-    try{
-        await User.findOneAndDelete({
-            dni: dni
-        })
-        .then(erased => {
-            res.send({"Message": `El usuario ${erased.name} ${erased.surname} se ha eliminado con éxito`})
-        })
-    }catch(error){
-        console.log ("Error deleting user", user)
+    try {
+        if (userAdmin.dni !== dni) {
+            let deleted = await User.findOneAndDelete({
+                dni: dni
+            })
+            if (deleted) {
+                res.send({ "Message": `El usuario ${erased.name} ${erased.surname} se ha eliminado con éxito` })
+            } else {
+                res.send({ "Msg": "No hemos encontrado al usuario a borrar" })
+            }
+        } else {
+            res.send({ "Msg": "Deletion not possible" });
+        }
+    } catch (error) {
+        console.log("Error deleting user", user)
     }
 }
 
 UsersController.loginUser = async (req, res) => {
 
-    try{
-        await User.find({
+    try {
+        let userFound = await User.find({
             email: req.body.email
         })
-        .then(userFound => {
+        if (userFound[0].email === undefined) {
+            res.send("Usuario o password incorrectos")
+        } else {
+            if (bcrypt.compareSync(req.body.password, userFound[0].password)) {
 
-            if(userFound[0].email === undefined){
-                res.send("Usuario o password incorrectos")
+                let token = jsonwebtoken.sign({ usuario: userFound }, authConfig.SECRET, { expiresIn: authConfig.EXPIRES })
+
+                let loginOk = `Bienvenido de nuevo ${userFound[0].name}`;
+                res.json({
+                    loginOk,
+                    token: token
+                })
             } else {
-                if(bcrypt.compareSync(req.body.password, userFound[0].password)){
-
-                    let token = jsonwebtoken.sign({ usuario: userFound}, authConfig.SECRET, {expiresIn: authConfig.EXPIRES})
-
-                    let loginOk = `Bienvenido de nuevo ${userFound[0].name}`;
-                    res.json({
-                        loginOk,
-                        token: token
-                    })
-                }else{
-                    res.send ("Usuario o password incorrectos")
-                }
+                res.send("Usuario o password incorrectos")
             }
-        })
-    }catch (error){
-        res.send ("Email o password incorrectos")
+        }
+    } catch (error) {
+        res.send("Email o password incorrectos")
     }
 }
+
 
 module.exports = UsersController
