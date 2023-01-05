@@ -16,6 +16,22 @@ const UserSchema = new Schema ({
         required: true, 
         unique: true,
         inmutable: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: Number
+    },
+    nationality: {
+        type: String
     }
 })
 
