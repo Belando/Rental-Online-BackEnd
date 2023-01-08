@@ -10,6 +10,22 @@ const serieSchema= new Schema ({
     year: {
         type: String,
         required: true
+    },
+    genre: {
+        type: String,
+        required: true,
+    },
+    chapter: {
+        type: Number,
+        required: true,
+    },
+    rank: {
+        type: Number,
+        required: true,
+    },
+    nextweek: {
+        type: String,
+        required: true,
     }
 })
 

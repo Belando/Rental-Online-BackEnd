@@ -70,7 +70,8 @@ UsersController.newUser = async (req, res) => {
             email: req.body.email,
             password: password,
             phone: req.body.phone,
-            nationality: req.body.nationality
+            nationality: req.body.nationality,
+            rol: req.body.rol
         })
         if (user) {
             res.send({ "Message": `El usuario ${user.name} se ha añadido con éxito` })
@@ -85,13 +86,21 @@ UsersController.updateUser = async (req, res) => {
     let dni = req.body.dni
     let newName = req.body.name
     let newSurname = req.body.surname
+    let newEmail = req.body.email
+    let newPassword = req.body.password
+    let newNationality = req.body.nationality
+    let newPhone = req.body.phone
 
     try {
         let updated = await User.findOneAndUpdate(
             { dni: dni },
             {
                 name: newName,
-                surname: newSurname
+                surname: newSurname,
+                email: newEmail,
+                password: newPassword,
+                nationality: newNationality,
+                phone: newPhone
             }
         ).setOptions({ returnDocument: "after" })
         if (updated) {
