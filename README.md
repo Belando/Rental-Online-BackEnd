@@ -10,7 +10,9 @@ bcrypt, dotenv, express, jsonwebtoken, mongoose, nodemon
 
 
 
+
 ENDPOINTS USUARIOS:
+
 
 
 Obtener todos los usuarios: http://localhost:5500/users/ GET
@@ -31,7 +33,9 @@ Borrar usuario con isAdmin: http://localhost:5500/users//admin/deleteuser DELETE
 
 
 
+
 ENDPOINTS PELÍCULAS:
+
 
 
 Obtener todas las películas: http://localhost:5500/movies GET
@@ -55,7 +59,9 @@ Listado por Rating: http://localhost:5500/movies/rating/top POST
 
 
 
+
 ENDPOINTS SERIES:
+
 
 
 Obtener todas las series: http://localhost:5500/series GET
