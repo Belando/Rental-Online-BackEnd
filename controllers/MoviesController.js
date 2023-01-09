@@ -100,32 +100,21 @@ MoviesController.getMovieById = async (req, res) => {
     }
 }
 
-MoviesController.getMovieByHighRating = async (req, res) => {
+MoviesController.postMovieByHighRating = async (req, res) => {
 
     try {
-        await Movie.find({
-            rank : (function (a, b) { return b - a; }).slice(0, 5)
+        const rank = req.body.rank
+        const foundMovies = await Movie.find({
+            rank : rank
         })
-            .then(foundMovie => {
-                res.send(foundMovie)
-            })
-
+        if(rank >= 80){
+            res.send(foundMovies)
+        }else{
+            res.send("Error")
+        }
     } catch (error) {
         console.log(error);
     }
-      // try {
-    //     let highRatedMovie = await Movie.rank.sort(function (a, b) { return b - a; }).slice(0, 10)({
-    //         rank: rank
-    //     })
-    //     if (highRatedMovie.length === 0) {
-    //         res.send("No hay ninguna serie con esa puntuacion")
-    //     } else {
-    //         res.send(highRatedMovie)
-    //     }
-    // } catch (error) {
-    //     console.log(error);
-    // }
-// }
 }
 
 MoviesController.newMovie = async (req, res) => {

@@ -51,8 +51,8 @@ router.delete("/", auth, SeriesController.deleteSerie)
 
 Errores conocidos y mejoras futuras
 
-Problema al autentificar con isAdmin y auth
-Endpoints de altas valoraciones no funcionan correctamente
+Problema al autentificar con isAdmin y auth: No me valida el token en el postman
+Endpoints de altas valoraciones no funcionan correctamente: he intentado probar con .slice, .sort para que me devuelva listado de las 5 mejores y no funciona.
 
 
 Francisco Belando Carrión - GeeksHub Academy

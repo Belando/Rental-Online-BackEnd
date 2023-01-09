@@ -5,16 +5,16 @@ const SeriesController = {}
 
 SeriesController.getAllSeries = async (req, res) => {
 
-    try{
+    try {
         let series = await Series.find({})
 
-        if(Series.length > 0){
+        if (Series.length > 0) {
             res.send(series)
-        }else{
-            res.send({"Msg":"Lo sentimos, no hemos encontrado ninguna serie."})
-        }  
-    } catch (error){
-        console.log (error)
+        } else {
+            res.send({ "Msg": "Lo sentimos, no hemos encontrado ninguna serie." })
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -25,9 +25,9 @@ SeriesController.postSeriesByName = async (req, res) => {
         let foundSeries = await Series.find({
             name: name
         })
-        if(foundSeries.length === 0){
+        if (foundSeries.length === 0) {
             res.send(`La serie ${name} no se ha encontrado`)
-        }else{
+        } else {
             res.send(foundSeries)
         }
     } catch (error) {
@@ -42,9 +42,9 @@ SeriesController.postSeriesByGenre = async (req, res) => {
         let foundSeries = await Series.find({
             genre: genre
         })
-        if(foundSeries.length === 0){
+        if (foundSeries.length === 0) {
             res.send(`El género ${genre} no se ha encontrado`)
-        }else{
+        } else {
             res.send(foundSeries)
         }
     } catch (error) {
@@ -58,9 +58,9 @@ SeriesController.getSeriesByWeek = async (req, res) => {
         let weeklySeries = await Series.find({
             nextweek: "En emisión"
         })
-        if(weeklySeries.length === 0){
+        if (weeklySeries.length === 0) {
             res.send("No hay series en emisión")
-        }else{
+        } else {
             res.send(weeklySeries)
         }
     } catch (error) {
@@ -74,9 +74,9 @@ SeriesController.getFinishedSeries = async (req, res) => {
         let finishedSeries = await Series.find({
             nextweek: "Finalizada"
         })
-        if(finishedSeries.length === 0){
+        if (finishedSeries.length === 0) {
             res.send("Ha ocurrido un error")
-        }else{
+        } else {
             res.send(finishedSeries)
         }
     } catch (error) {
@@ -90,9 +90,9 @@ SeriesController.getSeriesById = async (req, res) => {
         let seriesId = await Series.find({
             _id: req.params._id
         })
-        if(seriesId.length === 0){
+        if (seriesId.length === 0) {
             res.send("No hay ninguna serie con esa ID")
-        }else{
+        } else {
             res.send(seriesId)
         }
     } catch (error) {
@@ -100,78 +100,80 @@ SeriesController.getSeriesById = async (req, res) => {
     }
 }
 
-SeriesController.getSeriesByHighRating = async (req, res) => {
+SeriesController.postSeriesByHighRating = async (req, res) => {
 
     try {
-        await Series.find({
-            rank : (function (a, b) { return b - a; }).slice(0, 5)
+        const rank = req.body.rank
+        const foundSeries = await Series.find({
+            rank: rank
         })
-            .then(foundSeries => {
-                res.send(foundSeries)
-            })
+        if (rank >= 80) {
+            res.send(foundSeries)
+        } else {
+            res.send("Error")
+        }
     } catch (error) {
         console.log(error);
     }
 }
+    SeriesController.newSerie = async (req, res) => {
 
-SeriesController.newSerie = async (req, res) => {
-
-    try{
-        let serie = await Series.create({
-            name: req.body.name,
-            year: req.body.year,
-            chapter: req.body.chapter,
-            genre: req.body.genre,
-            rank: req.body.rank,
-            nextweek: req.body.nextweek
-        })
-        if(serie?.name){
-            res.send({"Message": `La serie ${serie.name} se ha añadido con éxito`})
-        }
-    }catch(error){
-        console.log(error)
-    }
-}
-
-SeriesController.updateSerie = async (req, res) => {
-
-    let _id = req.body._id
-    let newName = req.body.name
-    let newGenre = req.body.genre
-    let newRank = req.body.rank
-    let newNextweek = req.body.nextweek
-    let newYear = req.body.year
-    let newChapter = req.body.chapter
-
-    try{
-        let result = await Series.findByIdAndUpdate(_id, {
-            $set: {
-                name: newName,
-                year: newYear,
-                genre: newGenre,
-                rank: newRank,
-                chapter: newChapter,
-                nextweek: newNextweek,
+        try {
+            let serie = await Series.create({
+                name: req.body.name,
+                year: req.body.year,
+                chapter: req.body.chapter,
+                genre: req.body.genre,
+                rank: req.body.rank,
+                nextweek: req.body.nextweek
+            })
+            if (serie?.name) {
+                res.send({ "Message": `La serie ${serie.name} se ha añadido con éxito` })
             }
-        }).setOptions({ returnDocument: "after" })
-
-        if(result?.name){
-            res.send(result)
+        } catch (error) {
+            console.log(error)
         }
-    } catch (error){
-        console.log(error)
     }
-}
 
-SeriesController.deleteSerie = async (req, res) => {
-    let _id = req.body._id
-    
-    try{
-        let serie = await Series.findByIdAndDelete(_id)
-        res.send({"Message": `La serie ${serie.name} se ha eliminado con éxito`})
-    } catch (error){
-        console.log("Error borrando la serie", error)
+    SeriesController.updateSerie = async (req, res) => {
+
+        let _id = req.body._id
+        let newName = req.body.name
+        let newGenre = req.body.genre
+        let newRank = req.body.rank
+        let newNextweek = req.body.nextweek
+        let newYear = req.body.year
+        let newChapter = req.body.chapter
+
+        try {
+            let result = await Series.findByIdAndUpdate(_id, {
+                $set: {
+                    name: newName,
+                    year: newYear,
+                    genre: newGenre,
+                    rank: newRank,
+                    chapter: newChapter,
+                    nextweek: newNextweek,
+                }
+            }).setOptions({ returnDocument: "after" })
+
+            if (result?.name) {
+                res.send(result)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
-}
 
-module.exports = SeriesController
+    SeriesController.deleteSerie = async (req, res) => {
+        let _id = req.body._id
+
+        try {
+            let serie = await Series.findByIdAndDelete(_id)
+            res.send({ "Message": `La serie ${serie.name} se ha eliminado con éxito` })
+        } catch (error) {
+            console.log("Error borrando la serie", error)
+        }
+    }
+
+    module.exports = SeriesController
