@@ -4,9 +4,7 @@ Proyecto Backend: Buscador de Películas
 Funciones de JavaScript para realizar endpoints en base de datos de mongodb, usando Docker y Postman para el CRUD de usuarios, series y películas. Es necesario estar logeado para poder realizar estas operaciones. 
 
 
-Dependencias usadas:
-
-bcrypt, dotenv, express, jsonwebtoken, mongoose, nodemon
+Dependencias usadas: bcrypt, dotenv, express, jsonwebtoken, mongoose, nodemon
 
 
 
@@ -90,5 +88,6 @@ ERRORES CONOCIDOS Y MEJORAS PENDIENTES:
 Problema al autentificar con isAdmin y auth: No me valida el token en Postman
 Endpoints de altas valoraciones no funcionan correctamente: he intentado probar con .slice, .sort para que me devuelva listado de las 5 mejores y no funciona.
 Error al implementar el axios de la database de películas: todos los datos han sido introducidos a mano.
+
 
 Francisco Belando Carrión - GeeksHub Academy
