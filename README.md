@@ -4,12 +4,14 @@ Proyecto Backend: Buscador de Películas
 Funciones de JavaScript para realizar endpoints en base de datos de mongodb, usando Docker y Postman para el CRUD de usuarios, series y películas. Es necesario estar logeado para poder realizar estas operaciones. 
 
 
-Dependencias usadas: 
+Dependencias usadas:
 
 bcrypt, dotenv, express, jsonwebtoken, mongoose, nodemon
 
 
-Endpoints Usuario:
+
+ENDPOINTS USUARIOS:
+
 
 Obtener todos los usuarios: http://localhost:5500/users/ GET
 
@@ -28,7 +30,9 @@ Obtener usuario por ID: http://localhost:5500/users/profile/:id GET
 Borrar usuario con isAdmin: http://localhost:5500/users//admin/deleteuser DELETE
 
 
-Endpoints Peliculas:
+
+ENDPOINTS PELÍCULAS:
+
 
 Obtener todas las películas: http://localhost:5500/movies GET
 
@@ -50,7 +54,9 @@ Buscar por ID: http://localhost:5500/movies/:_id GET
 Listado por Rating: http://localhost:5500/movies/rating/top POST
 
 
-Endpoints Series:
+
+ENDPOINTS SERIES:
+
 
 Obtener todas las series: http://localhost:5500/series GET
 
@@ -73,7 +79,7 @@ Buscar por ID: http://localhost:5500/series/:_id GET
 Listado por Rating: http://localhost:5500/series/rating/top POST
 
 
-Errores conocidos y mejoras futuras:
+ERRORES CONOCIDOS Y MEJORAS PENDIENTES:
 
 Problema al autentificar con isAdmin y auth: No me valida el token en Postman
 Endpoints de altas valoraciones no funcionan correctamente: he intentado probar con .slice, .sort para que me devuelva listado de las 5 mejores y no funciona.
