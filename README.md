@@ -29,7 +29,7 @@ router.post("/genre", auth, MoviesController.postMoviesByGenre)
 router.get("/theater/yes", auth, MoviesController.getMoviesByTheater)
 router.get("/theater/no", auth, MoviesController.getMoviesByNotTheater)
 router.get("/:_id", auth, MoviesController.getMovieById)
-router.get("/rating/top", auth, MoviesController.getMovieByHighRating)
+router.post("/rating/top", auth, MoviesController.postMovieByHighRating)
 router.post("/", auth, MoviesController.newMovie)
 router.put("/", auth, MoviesController.updateMovie)
 router.delete("/", auth, MoviesController.deleteMovie)
@@ -43,7 +43,7 @@ router.post("/genre", auth, SeriesController.postSeriesByGenre)
 router.get("/weekly", auth, SeriesController.getSeriesByWeek)
 router.get("/finished", auth, SeriesController.getFinishedSeries)
 router.get("/:_id", auth, SeriesController.getSeriesById)
-router.get("/rating/top", auth, SeriesController.getSeriesByHighRating)
+router.post("/rating/top", auth, SeriesController.postSeriesByHighRating)
 router.post("/", auth, SeriesController.newSerie)
 router.put("/", auth, SeriesController.updateSerie)
 router.delete("/", auth, SeriesController.deleteSerie)
@@ -51,8 +51,8 @@ router.delete("/", auth, SeriesController.deleteSerie)
 
 Errores conocidos y mejoras futuras
 
-Problema al autentificar con isAdmin y auth: No me valida el token en el postman
+Problema al autentificar con isAdmin y auth: No me valida el token en Postman
 Endpoints de altas valoraciones no funcionan correctamente: he intentado probar con .slice, .sort para que me devuelva listado de las 5 mejores y no funciona.
-
+Error al implementar el axios de la database de películas: todos los datos han sido introducidos a mano.
 
 Francisco Belando Carrión - GeeksHub Academy
