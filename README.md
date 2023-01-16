@@ -93,5 +93,5 @@ ERRORES CORREGIDOS:
 
 Corregido error al autentificar con isAdmin y auth: funciona en Postman
 
-
+ 
 Francisco Belando Carrión - GeeksHub Academy
