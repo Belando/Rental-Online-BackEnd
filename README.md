@@ -57,7 +57,7 @@ Buscar por ID: http://localhost:5500/movies/:_id GET  -> Es necesario estar loge
 Listado por Rating: http://localhost:5500/movies/rating/:rank GET  -> Es necesario estar logeado.
 
 
-
+ 
 
 ENDPOINTS SERIES:
 
