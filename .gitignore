@@ -1,5 +1,5 @@
 /node_modules 
 
-dbconnect.js
+/db/dbconnect.js
 
 .env
