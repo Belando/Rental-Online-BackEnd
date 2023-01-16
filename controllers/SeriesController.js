@@ -100,12 +100,12 @@ SeriesController.getSeriesById = async (req, res) => {
     }
 }
 
-SeriesController.postSeriesByHighRating = async (req, res) => {
+SeriesController.getSeriesByRating = async (req, res) => {
 
     try {
-        const rank = req.body.rank
+        const rank = req.params.rank
         const foundSeries = await Series.find({
-            rank: rank
+            rank: {$gte:rank}
         })
         if (rank >= 80) {
             res.send(foundSeries)

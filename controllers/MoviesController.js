@@ -100,12 +100,12 @@ MoviesController.getMovieById = async (req, res) => {
     }
 }
 
-MoviesController.postMovieByHighRating = async (req, res) => {
+MoviesController.getMovieByRating = async (req, res) => {
 
     try {
-        const rank = req.body.rank
+        const rank = req.params.rank
         const foundMovies = await Movie.find({
-            rank : rank
+            rank : {$gte:rank}
         })
         if(rank >= 80){
             res.send(foundMovies)
