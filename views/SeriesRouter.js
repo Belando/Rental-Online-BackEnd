@@ -9,7 +9,7 @@ const isAdmin = require("../middlewares/isAdmin")
 const SeriesController = require("../controllers/SeriesController")
 
 router.get("/", SeriesController.getAllSeries)
-router.post("/tittle", auth, SeriesController.postSeriesByName)
+router.get("/search/:name", SeriesController.getSeriesByName)
 router.post("/genre", auth, SeriesController.postSeriesByGenre)
 router.get("/weekly", auth, SeriesController.getSeriesByWeek)
 router.get("/finished", auth, SeriesController.getFinishedSeries)

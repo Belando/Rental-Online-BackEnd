@@ -18,9 +18,9 @@ SeriesController.getAllSeries = async (req, res) => {
     }
 }
 
-SeriesController.postSeriesByName = async (req, res) => {
+SeriesController.getSeriesByName = async (req, res) => {
 
-    let name = req.body.name
+    let name = req.params.name
     try {
         let foundSeries = await Series.find({
             name: name
@@ -144,6 +144,7 @@ SeriesController.getSeriesByRating = async (req, res) => {
         let newNextweek = req.body.nextweek
         let newYear = req.body.year
         let newChapter = req.body.chapter
+        let newposter_path = req.body.poster_path
 
         try {
             let result = await Series.findByIdAndUpdate(_id, {
@@ -154,6 +155,7 @@ SeriesController.getSeriesByRating = async (req, res) => {
                     rank: newRank,
                     chapter: newChapter,
                     nextweek: newNextweek,
+                    poster_path: newposter_path
                 }
             }).setOptions({ returnDocument: "after" })
 

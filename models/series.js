@@ -26,6 +26,10 @@ const serieSchema= new Schema ({
     nextweek: {
         type: String,
         required: true,
+    },
+    poster_path: {
+        type: String,
+        required: true
     }
 })
 
