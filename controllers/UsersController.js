@@ -137,17 +137,17 @@ UsersController.deleteUser = async (req, res) => {
 UsersController.loginUser = async (req, res) => {
 
     try {
-        let userFound = await User.find({
+        const user = await User.find({
             email: req.body.email
         })
-        if (userFound[0].email === undefined) {
+        if (user[0].email === undefined) {
             res.send("Usuario o password incorrectos")
         } else {
-            if (bcrypt.compareSync(req.body.password, userFound[0].password)) {
+            if (bcrypt.compareSync(req.body.password, user[0].password)) {
 
-                let token = jsonwebtoken.sign({ usuario: userFound }, authConfig.SECRET, { expiresIn: authConfig.EXPIRES })
+                let token = jsonwebtoken.sign({ usuario: user[0] }, authConfig.SECRET, { expiresIn: authConfig.EXPIRES })
 
-                let loginOk = `Bienvenido de nuevo ${userFound[0].name}`;
+                let loginOk = `Bienvenido de nuevo ${user[0].name}`;
                 res.json({
                     loginOk,
                     token: token

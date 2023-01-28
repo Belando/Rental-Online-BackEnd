@@ -13,9 +13,9 @@ const UserSchema = new Schema ({
     },
     dni: {
         type: String,
-        required: true, 
         unique: true,
-        inmutable: true
+        inmutable: true,
+        select: false
     },
     email: {
         type: String,
@@ -25,7 +25,8 @@ const UserSchema = new Schema ({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        
     },
     phone: {
         type: Number
