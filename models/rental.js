@@ -12,19 +12,24 @@ const rentalSchema = new Schema ({
         required: true
     },
     nameSerie:{
-        type: String
+        type: String,
+        required: true
     },
     nameUser:{
-        type: String
+        type: String,
+        required: true
     },
     rentalDate: {
-        type: Date
+        type: Date,
+        required: true
     },
     returnDate: {
-        type: Date
+        type: Date,
+        required: true
     },
     price: { 
-        type: Number
+        type: Number,
+        required: true
     }
 
 });
