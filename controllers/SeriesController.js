@@ -20,15 +20,16 @@ SeriesController.getAllSeries = async (req, res) => {
 
 SeriesController.getSeriesByName = async (req, res) => {
 
-    let name = req.params.name
+    const name = req.params.name
     try {
-        let foundSeries = await Series.find({
-            name: name
+        const seriename = await Series.find({
+            "name": { "$regex": name, "$options": "i"}
         })
-        if (foundSeries.length === 0) {
-            res.send(`La serie ${name} no se ha encontrado`)
+        if (seriename.length === 0) {
+            res.status(404)
+            res.send(`Error: serie not found`)
         } else {
-            res.send(foundSeries)
+            res.send(seriename)
         }
     } catch (error) {
         console.log(error)

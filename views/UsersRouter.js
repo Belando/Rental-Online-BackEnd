@@ -18,4 +18,6 @@ router.post("/name", auth, isAdmin, UsersController.getUsersByName)
 router.get("/profile/:_id", auth, isAdmin, UsersController.getUserById)
 router.delete("/admin/deleteuser", auth, isAdmin, UsersController.deleteUser)
 
+
+
 module.exports = router
