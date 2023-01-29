@@ -12,9 +12,13 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.2",
     "nodemon": "^2.0.20",
+<<<<<<< Updated upstream
     "supertest": "^6.3.3"
   },
   "devDependencies": {
     "jest": "^29.4.1"
+=======
+    "react": "^18.2.0"
+>>>>>>> Stashed changes
   }
 }
