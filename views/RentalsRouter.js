@@ -12,7 +12,7 @@ router.get("/admin", auth, RentalsController.AllUsersAdmin);
 
 router.post("/newrental", auth, RentalsController.newRental);
 
-router.get("/:_id", auth, RentalsController.allRentalsUser);
+router.get("/user", auth, RentalsController.allRentalsUser);
 
 
 module.exports = router;

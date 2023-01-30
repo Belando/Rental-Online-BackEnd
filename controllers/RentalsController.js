@@ -26,9 +26,9 @@ RentalsController.newRental = async (req, res) => {
             idSerie: req.body.idSerie,
             nameSerie : req.body.nameSerie,
             nameUser : req.body.nameUser,
-            fechaInicio: req.body.rentalDate,
-            fechaFin: req.body.returnDate,
-            importe: req.body.price
+            rentalDate: req.body.rentalDate,
+            returnDate: req.body.returnDate,
+            price: req.body.price
         })
         if (user) {
             res.send({ "data": `Serie alquilada con éxito` });
