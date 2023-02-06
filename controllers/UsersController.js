@@ -1,10 +1,7 @@
-
 const User = require("../models/users")
 const bcrypt = require("bcrypt")
 const jsonwebtoken = require("jsonwebtoken")
-
 const authConfig = require("../config/auth")
-
 const UsersController = {}
 
 UsersController.getAllUsers = async (req, res) => {
@@ -83,7 +80,6 @@ UsersController.newUser = async (req, res) => {
 
 UsersController.updateUser = async (req, res) => {
 
-    let dni = req.body.dni
     let newName = req.body.name
     let newSurname = req.body.surname
     let newEmail = req.body.email

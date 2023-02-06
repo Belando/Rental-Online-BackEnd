@@ -8,11 +8,11 @@ const isAdmin = require('../middlewares/isAdmin');
 const RentalsController = require('../controllers/RentalsController');
 
 
-router.get("/admin", auth, RentalsController.AllUsersAdmin);
+router.get("/admin", auth, isAdmin, RentalsController.AllUsersAdmin);
 
 router.post("/newrental", auth, RentalsController.newRental);
 
-router.get("/user", auth, RentalsController.allRentalsUser);
+router.get("/user/:_id", auth, RentalsController.allRentalsUser);
 
 
 module.exports = router;

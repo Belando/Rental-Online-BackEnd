@@ -1,7 +1,5 @@
-
-module.exports = async (req, res, next) => {
-    console.log(req.User)
-    if (req.User && req.User.rol == "admin") {
+module.exports = (req, res, next) => {
+    if (req.user && req.user.rol == "admin") {
         next();
     } else {
         res.status(401).send("Forbidden access")

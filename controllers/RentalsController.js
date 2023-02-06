@@ -41,11 +41,10 @@ RentalsController.newRental = async (req, res) => {
 };
 
 RentalsController.allRentalsUser = async (req, res) => {
-
+    let _id = req.params._id
     try {
-        let result = await Rental.find({})
-            .populate('idUser')
-            .populate('idSerie');
+        let result = await Rental.find( {idUser: _id})
+            
         if (result.length > 0) {
             res.send(result)
         } else {

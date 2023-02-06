@@ -1,6 +1,4 @@
-
 const jsonwebtoken = require("jsonwebtoken")
-
 const authConfig = require("../config/auth")
 
 module.exports = (req, res, next) => {
@@ -12,7 +10,7 @@ module.exports = (req, res, next) => {
             if(err) {
                 res.status(500).json({msg: "Ha ocurrido un problema al decodificar el token", err})
             }else {
-                req.user = decoded.usuario[0]
+                req.user = decoded.usuario
                 next()
             }
         })
